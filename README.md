@@ -1,4 +1,4 @@
-# dharitri-go-logger
+# drtg--logger
 Dharitri's logger subsystem written in go
 
 ## CLI options
