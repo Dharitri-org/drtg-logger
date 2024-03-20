@@ -2,9 +2,9 @@ package logger_test
 
 import (
 	"sync/atomic"
-
 	"testing"
 
+	"github.com/Dharitri-org/drtg-core/core/check"
 	logger "github.com/Dharitri-org/drtg-logger"
 	"github.com/Dharitri-org/drtg-logger/mock"
 	"github.com/stretchr/testify/assert"
@@ -28,6 +28,13 @@ func generateTestLogOutputSubject() (logger.LogOutputHandler, *int32) {
 	)
 
 	return los, &numCalls
+}
+
+func TestLogger_NewLogger(t *testing.T) {
+	t.Parallel()
+
+	l := logger.NewLogger("name", logger.LogDebug, nil)
+	assert.False(t, check.IfNil(l))
 }
 
 //------- Trace
@@ -194,6 +201,41 @@ func TestLogger_ErrorShouldCallIfLogLevelIsLower(t *testing.T) {
 	assert.Equal(t, int32(1), atomic.LoadInt32(numCalls))
 }
 
+func TestLogger_Log(t *testing.T) {
+	t.Parallel()
+
+	t.Run("should not call if logLevel is higher", func(t *testing.T) {
+		t.Parallel()
+
+		los, numCalls := generateTestLogOutputSubject()
+		log := logger.NewLogger("test", logger.LogNone, los)
+
+		log.Log(logger.LogDebug, "test")
+
+		assert.Equal(t, int32(0), atomic.LoadInt32(numCalls))
+	})
+	t.Run("should call if logLevel is equal", func(t *testing.T) {
+		t.Parallel()
+
+		los, numCalls := generateTestLogOutputSubject()
+		log := logger.NewLogger("test", logger.LogDebug, los)
+
+		log.Log(logger.LogDebug, "test")
+
+		assert.Equal(t, int32(1), atomic.LoadInt32(numCalls))
+	})
+	t.Run("should call if logLevel is lower", func(t *testing.T) {
+		t.Parallel()
+
+		los, numCalls := generateTestLogOutputSubject()
+		log := logger.NewLogger("test", logger.LogTrace, los)
+
+		log.Log(logger.LogDebug, "test")
+
+		assert.Equal(t, int32(1), atomic.LoadInt32(numCalls))
+	})
+}
+
 //------- LogIfError
 
 func TestLogger_LogIfErrorShouldNotCallIfErrorIsNil(t *testing.T) {
@@ -235,26 +277,26 @@ func TestLogger_SetLevelShouldWork(t *testing.T) {
 	assert.Equal(t, int32(1), atomic.LoadInt32(numCalls))
 }
 
-//------- Log
+//------- LogLine
 
-func TestLogger_LogNilShouldNotCallWrite(t *testing.T) {
+func TestLogger_LogLineNilShouldNotCallWrite(t *testing.T) {
 	t.Parallel()
 
 	los, numCalls := generateTestLogOutputSubject()
 	log := logger.NewLogger("test", logger.LogError, los)
 
-	log.Log(nil)
+	log.LogLine(nil)
 
 	assert.Equal(t, int32(0), atomic.LoadInt32(numCalls))
 }
 
-func TestLogger_LogShouldWork(t *testing.T) {
+func TestLogger_LogLineShouldWork(t *testing.T) {
 	t.Parallel()
 
 	los, numCalls := generateTestLogOutputSubject()
 	log := logger.NewLogger("test", logger.LogError, los)
 
-	log.Log(&logger.LogLine{})
+	log.LogLine(&logger.LogLine{})
 
 	assert.Equal(t, int32(1), atomic.LoadInt32(numCalls))
 }
