@@ -4,8 +4,8 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/Dharitri-org/drtg-core/core/check"
 	logger "github.com/Dharitri-org/drtg-logger"
-	"github.com/Dharitri-org/drtg-logger/check"
 	"github.com/Dharitri-org/drtg-logger/mock"
 	"github.com/stretchr/testify/assert"
 )

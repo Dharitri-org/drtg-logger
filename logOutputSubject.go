@@ -5,7 +5,7 @@ import (
 	"io"
 	"sync"
 
-	"github.com/Dharitri-org/drtg-logger/check"
+	"github.com/Dharitri-org/drtg-core/core/check"
 )
 
 var _ LogOutputHandler = (*logOutputSubject)(nil)
