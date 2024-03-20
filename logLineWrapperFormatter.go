@@ -1,7 +1,7 @@
 package logger
 
 import (
-	"github.com/Dharitri-org/drtg-logger/check"
+	"github.com/Dharitri-org/drtg-core/core/check"
 )
 
 // logLineWrapperFormatter converts the LogLineHandler into its marshalized form

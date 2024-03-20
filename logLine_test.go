@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/Dharitri-org/drtg-core/marshal"
 	logger "github.com/Dharitri-org/drtg-logger"
-	"github.com/Dharitri-org/drtg-logger/marshal"
 	"github.com/Dharitri-org/drtg-logger/proto"
 	"github.com/stretchr/testify/assert"
 )
