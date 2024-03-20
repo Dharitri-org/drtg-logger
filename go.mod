@@ -3,7 +3,7 @@ module github.com/Dharitri-org/drtg-logger
 go 1.20
 
 require (
-	github.com/Dharitri-org/drtg-core v0.1.4
+	github.com/Dharitri-org/drtg-core v0.0.4
 	github.com/gogo/protobuf v1.3.2
 	github.com/stretchr/testify v1.9.0
 )
